@@ -1,0 +1,7 @@
+Options -MultiViews -Indexes
+
+DirectoryIndex indexfile.php
+
+RewriteEngine On
+RewriteRule ^([a-z-]+)(/(alta))?$ indexfile.php?ent=$1&act=$3 [NC]
+RewriteRule ^([a-z-]+)/([0-9a-f]+)(/(editar))?$ indexfile.php?ent=$1&id=$2&act=$4 [NC]
