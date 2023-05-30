@@ -1,0 +1,14 @@
+| base
+    | presto(back)
+        | cross
+            * config.php
+            * autoloader.php
+        | models
+        | controllers
+        | views
+    | public_html(front)
+        | back-interface
+        | css
+        | js
+        * indexfile.php
+        * .htaccess

@@ -1,0 +1,9 @@
+.vldt__field--invalid {
+    outline: 2px solid var(--def-error-color);
+    outline-offset: -1px;
+}
+
+.vldt__caption {
+    font-size: .8rem;
+    color: var(--def-error-color);
+}

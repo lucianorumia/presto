@@ -1,0 +1,8 @@
+@import "/css/common/base.css";
+@import "/css/common/action-bar.css";
+
+.error-description {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    font-size: 1.2rem;
+}
