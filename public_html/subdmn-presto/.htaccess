@@ -2,11 +2,11 @@ Options -MultiViews -Indexes
 
 DirectoryIndex indexfile.php
 
-# Rewrite Rules
 RewriteEngine On
-RewriteRule ^([a-z-]+)(/(alta))?$ indexfile.php?view=$1&act=$3 [NC]
-RewriteRule ^([a-z-]+)/([0-9a-f]+)(/(editar))?$ indexfile.php?view=$1&id=$2&act=$4 [NC]
+RewriteRule ^([a-z-]+)$ indexfile.php?view=$1 [NC]
+RewriteRule ^([a-z-]+)/(alta)$ indexfile.php?view=$1&act=$2 [NC]
+RewriteRule ^([a-z-]+)/([0-9a-f]+)$ indexfile.php?view=$1&id=$2 [NC]
+RewriteRule ^([a-z-]+)/([0-9a-f]+)/(editar)$ indexfile.php?view=$1&id=$2&act=$3 [NC]
 
-# Error Files
 ErrorDocument 403 /indexfile.php?view=error&id=403
 ErrorDocument 404 /indexfile.php?view=error&id=404

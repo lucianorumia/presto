@@ -1,11 +1,10 @@
 <?php
 
-use Back\Cross\Acts;
-use Back\Cross\Security;
-use Back\Cross\Views;
-
-require_once __DIR__ . '/../../subdmns/presto/cross/security.php';
-
-$x = new Security;
-
-echo $x->franDecrypt('afgBqurpqqMu4fqfoN7HhA9A==8ef93b02808eb1b835972f19cc443866');
+// // Test url and view_data variables
+// echo 'url_view: ', $url_view ??= 'nulo', '<br>';
+// echo 'url_id: ', $url_id ??= 'nulo', '<br>';
+// echo 'url_act: ', $url_act ??= 'nulo', '<br>';
+// echo '<br>';
+// echo 'view: ', $view_data['view']->value, '<br>';
+// echo 'id: ', $view_data['id'] ??= 'nulo', '<br>';
+// echo 'act: ', var_dump($view_data['act']), '<br>';

@@ -16,13 +16,10 @@ switch ($view_data['id']) {
             . 'Ponete en contacto con el administrador del sistema.';
         break;
 }
-
-echo <<<HTML
+?>
         <h1 class="page-title">Ups!</h1>
-        <p class="error-description">$error_desc<p>
+        <p class="error-description"><?php echo $error_desc ?><p>
         <div class="action-bar">
-            <button class="action-bar__button" id="home-btn">Ir al Home</button>
+            <button class="action-bar__button" id="home-btn">Ir al Inicio</button>
             <div class="action-bar__circle"></div>
         </div>
-HTML;
-?>

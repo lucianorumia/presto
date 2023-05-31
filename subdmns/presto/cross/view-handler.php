@@ -14,9 +14,11 @@ class ViewHandler {
                 if ($rqsted_view === null) {
                     $view = Views::Error;
                     $id = '404';
+                    $act = Acts::Detail;
                 } elseif ($rqsted_view === Views::Login) {
                     $view = Views::Error;
                     $id = '825';
+                    $act = Acts::Detail;
                 } else {
                     $rqsted_act = Acts::tryFromUrl($url_act);
                     $act = match(true) {
@@ -34,20 +36,21 @@ class ViewHandler {
                         } else {
                             $view = Views::Error;
                             $id = '403';
-                            $act = null;
+                            $act = Acts::Detail;
                         }
                     } else {
                         $view = Views::Error;
                         $id = '404';
-                        $act = null;
+                        $act = Acts::Detail;
                     }
                 }
             } else {
                 $view = Views::Home;
             }
         } else {
-            if (isset($url_id) ||
-                (isset($url_view) && strtolower($url_view) !== Views::Login->value)) {
+            if ((isset($url_view) && strtolower($url_view) !== Views::Login->value)
+            || isset($url_id)
+            || isset($url_act)) {
                 header('Location: /login');
             } else {
                 $view = Views::Login;
