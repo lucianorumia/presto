@@ -6,8 +6,6 @@ use Back\Cross\CstmExceptions;
 use Back\Cross\Views;
 use Back\Controllers\User;
 
-// require __DIR__ . '/../../cross/router.php';
-
 $security = new Security;
 $user = new User;
 
@@ -25,6 +23,7 @@ try {
                 $_SESSION["user_id"] = $match["user_id"];
                 $_SESSION["user_name"] = $name;
                 $_SESSION["user_role_id"] = $match["role_id"];
+                $_SESSION["token"] = $security->generateSessionToken();
 
                 $resp['success'] = true;
                 $resp['location'] = '/home';
@@ -37,12 +36,12 @@ try {
     } else {
         throw new CstmException(CstmExceptions::NO_FRAN);
     }
-} catch (CstmException $e) {
+} catch (CstmException $ex) {
     $resp['success'] = false;
-    $resp['error'] = "CST{$e->getCode()}";
+    $resp['error'] = "CST{$ex->getCode()}";
 } catch (Throwable $th) {
     $resp['success'] = false;
-    $resp['error'] = $th->getMessage() . $th->getFile() . $th->getLine();
+    $resp['error'] = $th->getMessage();
 }
 
 header("Content-Type: application/json; charset=UTF-8");

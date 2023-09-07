@@ -1,14 +1,43 @@
-| base
-    | presto(back)
-        | cross
-            * config.php
-            * autoloader.php
-        | models
-        | controllers
-        | views
-    | public_html(front)
-        | back-interface
-        | css
-        | js
-        * indexfile.php
-        * .htaccess
+base
+|
+|__ presto(back)
+|   |
+|   |__ cross
+|   |   * config
+|   |   * autoloader
+|   |    
+|   |__ models
+|   |
+|   |__ controllers
+|   |   |
+|   |   |__ action-handlers
+|   |       * login-fetch
+|   |       * logout
+|   |       * .htaccess
+|   |
+|   |__ views
+|
+|__ public_html(front)
+    |
+    |__ back-interface
+    |
+    |__ css
+    |
+    |__ js
+    * indexfile
+    * .htaccess
+
+Views\ClientesNew
+    Adresses display-none (div + span): pending functionality
+    extend-form-btn display-none: pending functionality
+
+Errores
+    BackInterface
+        NO_REQUEST
+        NO_TOKEN
+        INVALID_TOKEN
+
+Pendientes
+    Reempl harcode cuentas def + capt def
+        en: nuevo préstamo
+        

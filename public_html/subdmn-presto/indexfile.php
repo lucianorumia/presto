@@ -30,8 +30,8 @@ $security = new Security;
     <link rel="icon" type="image/x-icon" href="/res/favicon_64.png">
 <?php
     // Import fonts
-    include Router::getFilePath('Back\Views\Common\Fonts');
-    echo PHP_EOL;
+    // include Router::getFilePath('Back\Views\Common\Fonts');
+    // echo PHP_EOL;
 
     // Set CSS file
     echo "\t<link rel='stylesheet' href='{$view_handler->cssFilepath()}'>" . PHP_EOL;

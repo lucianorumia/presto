@@ -1,0 +1,10 @@
+.multi-x {
+    position: relative;
+    display: flex;
+    left: 0;
+    transition: left var(--def-transition-duration);
+}
+
+.multi-x__slide {
+    width: 100vw;
+} 

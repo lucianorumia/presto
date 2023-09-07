@@ -2,19 +2,20 @@
 namespace Back\Models;
 
 use \PDO;
-use USER_ROLE;
 
-class User extends Connection {
+class User {
+    
+    private $dbh;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct(DbConnection $dbh) {
+        $this->dbh = $dbh;
     }
     
     public function selectUserById($id) {
         $sql = "SELECT * " // id, name, pass, email, role_id
                 . "FROM users "
                 . "WHERE id = :id";
-        $stmt = $this->connection->prepare($sql);
+        $stmt = $this->dbh->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -26,7 +27,7 @@ class User extends Connection {
         $sql = "SELECT id, pass, email, role_id 
             FROM users 
             WHERE name = :name";
-        $stmt = $this->connection->prepare($sql);
+        $stmt = $this->dbh->prepare($sql);
         $stmt->bindParam(":name", $name, PDO::PARAM_STR);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -51,11 +52,11 @@ class User extends Connection {
         
         $sql = 'SELECT u.id, name, email, role '
                 . 'FROM users AS u '
-                . 'JOIN usr_roles AS r '
+                . 'JOIN user_roles AS r '
                 . 'ON u.role_id = r.id';
         $sql .= empty($set_param) ? '' : $where_str;
 
-        $stmt = $this->connection->prepare($sql);
+        $stmt = $this->dbh->prepare($sql);
 
         if (in_array('name', $set_param)) {
             $stmt->bindValue(':name', "%$name%", PDO::PARAM_STR);
@@ -70,21 +71,10 @@ class User extends Connection {
         return $resp;
     }
 
-    public function selectEmployees(): array|false {
-        $sql = 'SELECT id, name '
-            . 'FROM users '
-            . 'WHERE role_id = ' . USER_ROLE::EMPLOYEE->value;
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute();
-        $resp = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $resp;
-    }
-
     public function insertUser ($name, $pass, $email, $role_id) {
         $sql = 'INSERT INTO users (name, pass, email, role_id) '
                 . 'VALUES (:name, :pass, :email, :role_id)';
-        $stmt = $this->connection->prepare($sql);
+        $stmt = $this->dbh->prepare($sql);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -108,7 +98,7 @@ class User extends Connection {
                 . "rol_id = :rol_id
                 $sub_sql
                 WHERE id = :id";
-        $stmt = $this->connection->prepare($sql);
+        $stmt = $this->dbh->prepare($sql);
         $stmt->bindParam(":usuario", $usuario, PDO::PARAM_STR);
         $stmt->bindParam(":mail", $mail, PDO::PARAM_STR);
         $stmt->bindParam(":rol_id", $rol_id, PDO::PARAM_INT);
@@ -128,7 +118,7 @@ class User extends Connection {
     public function deleteUser($id) {
         $sql = 'DELETE FROM users '
                 . 'WHERE id = :id';
-        $stmt = $this->connection->prepare($sql);
+        $stmt = $this->dbh->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $resp = $stmt->execute();
 
@@ -137,8 +127,9 @@ class User extends Connection {
 
     public function selectUserRoles () {
         $sql = "SELECT * "
-            . "FROM usr_roles;";
-        $stmt = $this->connection->prepare($sql);
+            . "FROM user_roles "
+            . "WHERE id > 1"; // excludes SysAdmin
+        $stmt = $this->dbh->prepare($sql);
         $stmt->execute();
         $resp = $stmt->fetchAll(PDO::FETCH_ASSOC);
         

@@ -23,6 +23,7 @@
 }
 
 .action-bar__button {
+    font-size: .8125rem;
     color: var(--def-light-gray);
     background-color: transparent;
     padding: .3em .5rem;

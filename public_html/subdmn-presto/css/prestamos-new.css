@@ -1,0 +1,57 @@
+@import "/css/common/base.css";
+@import "/css/common/multi-x.css";
+@import "/css/common/def-form.css";
+@import "/css/common/def-table.css";
+@import "/css/common/action-bar.css";
+@import "/css/common/modal.css";
+
+.multi-x {
+    width: calc(100vw * 2);
+    flex: 1;
+    overflow-y: hidden;
+}
+
+.multi-x__slide {
+    display: flex;
+    flex-direction: column;
+}
+
+.def-form {
+    margin: auto;
+}
+
+.def-table__container {
+    position: relative;
+}
+
+#sim-table td:nth-child(2),
+#sim-table td:nth-child(3) {
+    text-align: center;
+}
+
+#sim-table td:nth-child(4),
+#sim-table td:nth-child(5),
+#sim-table td:nth-child(6) {
+    text-align: right;
+}
+
+.sim-totals {
+    position: sticky;
+    width: 100%;
+    bottom: 0;
+    font-size: .92em;
+    background-color: var(--def-back-gray);
+    padding: 1.5rem 0 .5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.sim-totals span {
+    margin-left: 8px;
+    padding: .15em .4em;
+    color: var(--def-back-gray);
+    background-color: var(--def-light-gray);
+    border-radius: 4px;
+}

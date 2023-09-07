@@ -1,0 +1,32 @@
+@import "/css/common/base.css";
+@import "/css/common/def-form.css";
+@import "/css/common/validations.css";
+@import "/css/common/action-bar.css";
+@import "/css/common/modal.css";
+
+span[class$="__title"] {
+    font-weight: inherit;
+}
+
+span[class$="__remove"] {
+    font-size: .8125rem;
+    float: right;
+}
+
+span[id^="add-"] {
+    font-size: .8125rem;
+    margin: 0 0 1em;
+}
+
+.tel__tipo,
+.email__tipo {
+    width: 7em;
+}
+
+label[class$="__def"] {
+    margin: .5em 0 .5em;
+}
+
+label[for="obs-inp"] {
+    margin-top: 1rem;
+}

@@ -3,7 +3,7 @@ const CST_ERROR = Object.freeze({
         code: 'CST1001',
         modal: {
             title: 'Error de login',
-            text: 'Usuiario y/o contraseña incorrectos.<br>Volvé a intentarlo.',
+            text: 'Usuario y/o contraseña incorrectos.<br>Volvé a intentarlo.',
         },
     },
 

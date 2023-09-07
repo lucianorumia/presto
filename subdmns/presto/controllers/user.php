@@ -2,12 +2,15 @@
 namespace Back\Controllers;
 
 use Back\Cross\Security;
+use Back\Models\DbConnection;
 use Back\Models\User as User_mdl;
 
 class User {
     public function loginDataMatch($name, $pass): array|false {
-        $user_mdl = new User_mdl;
+        $dbh = new DbConnection;
+        $user_mdl = new User_mdl($dbh);
         $user_match = $user_mdl->selectUserByName($name);
+        // $dbh = null;
 
         if($user_match){
             $hash_pass = $user_match['pass'];
@@ -26,8 +29,10 @@ class User {
     }
 
     public function passVerify($user_id, $pass): bool {
-        $user_mdl = new User_mdl;
+        $dbh = new DbConnection;
+        $user_mdl = new User_mdl($dbh);
         $user_data = $user_mdl->selectUserById($user_id);
+        // $dbh = null;
         $hash_pass = $user_data["pass"];
         $res = password_verify($pass, $hash_pass);
 
@@ -35,48 +40,33 @@ class User {
     }
     
     public function getUsers($name = null, $role_id = null) {
-        $user_mdl = new User_mdl;
+        $dbh = new DbConnection;
+        $user_mdl = new User_mdl($dbh);
         $resp = $user_mdl->selectUsers($name, $role_id);
-
-        return $resp;
-    }
-
-    public function getEmployees(): array|false {
-        $security = new Security;
-        $user_mdl = new User_mdl;
-        $rows = $user_mdl->selectEmployees();
+        // $dbh = null;
         
-        if ($rows) {
-            $resp = [];
-            foreach ($rows as $i => $row) {
-                $resp[$i] = [
-                    'key' => $security->aideEncrypt($row['id']),
-                    'name' => $row['name']
-                ];
-            }
-        } else {
-            $resp = false;
-        }
-
         return $resp;
     }
 
     public function getUserById($id) {
-        $user_mdl = new User_mdl;
+        $dbh = new DbConnection;
+        $user_mdl = new User_mdl($dbh);
         $resp = $user_mdl->selectUserById($id);
 
         return $resp;
     }
 
     public function getUserRoles() {
-        $user_mdl = new User_mdl;
+        $dbh = new DbConnection;
+        $user_mdl = new User_mdl($dbh);
         $resp = $user_mdl->selectUserRoles();
         
         return $resp;
     }
 
     public function createUser($name, $pass, $email, $role_id) {
-        $user_mdl = new User_mdl;
+        $dbh = new DbConnection;
+        $user_mdl = new User_mdl($dbh);
         $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
         $resp = $user_mdl->insertUser($name, $hash_pass, $email, $role_id);
         
@@ -84,7 +74,8 @@ class User {
     }
 
     public function deleteUser($id) {
-        $user_mdl = new User_mdl;
+        $dbh = new DbConnection;
+        $user_mdl = new User_mdl($dbh);
         $resp = $user_mdl->deleteUser($id);
         
         return $resp;

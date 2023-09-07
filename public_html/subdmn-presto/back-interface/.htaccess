@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{HTTP_REFERER} !presto.rumia.vhost [NC]
+# RewriteCond %{HTTP_REFERER} !presto.rumia.uno [NC]
+RewriteRule .* - [F]

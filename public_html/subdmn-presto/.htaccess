@@ -3,10 +3,16 @@ Options -MultiViews -Indexes
 DirectoryIndex indexfile.php
 
 RewriteEngine On
-RewriteRule ^([a-z-]+)$ indexfile.php?view=$1 [NC]
-RewriteRule ^([a-z-]+)/(alta)$ indexfile.php?view=$1&act=$2 [NC]
-RewriteRule ^([a-z-]+)/([0-9a-f]+)$ indexfile.php?view=$1&id=$2 [NC]
-RewriteRule ^([a-z-]+)/([0-9a-f]+)/(editar)$ indexfile.php?view=$1&id=$2&act=$3 [NC]
+
+# back-interface
+RewriteCond %{HTTP_REFERER} !^https?://presto\.rumia\.vhost/ [NC]
+# RewriteCond %{HTTP_REFERER} !^https?://presto\.rumia\.uno/ [NC]
+RewriteRule ^back-interface\.php$ - [F,L]
+
+RewriteRule ^([a-z-]+)$ indexfile.php?view=$1 [NC,L]
+RewriteRule ^([a-z-]+)/(alta)$ indexfile.php?view=$1&act=$2 [NC,L]
+RewriteRule ^([a-z-]+)/([0-9a-f]+)$ indexfile.php?view=$1&id=$2 [NC,L]
+RewriteRule ^([a-z-]+)/([0-9a-f]+)/(editar)$ indexfile.php?view=$1&id=$2&act=$3 [NC,L]
 
 ErrorDocument 403 /indexfile.php?view=error&id=403
 ErrorDocument 404 /indexfile.php?view=error&id=404

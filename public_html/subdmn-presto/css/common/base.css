@@ -24,7 +24,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Jost", "Century Gothic", sans-serif;
+    font-family: "Century Gothic", sans-serif;
     font-weight: 300;
     /* outline: none; */
 }
@@ -398,4 +398,13 @@ footer {
     border-radius: 6px;
     padding: .5em;
     margin: .5em;
+}
+
+.sprclss--action-span {
+    text-decoration: none;
+    cursor: pointer; 
+}
+
+.sprclss--action-span:hover {
+    color: var(--def-accent-color);
 }

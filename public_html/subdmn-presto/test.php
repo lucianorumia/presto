@@ -1,10 +1,27 @@
 <?php
 
-// // Test url and view_data variables
-// echo 'url_view: ', $url_view ??= 'nulo', '<br>';
-// echo 'url_id: ', $url_id ??= 'nulo', '<br>';
-// echo 'url_act: ', $url_act ??= 'nulo', '<br>';
-// echo '<br>';
-// echo 'view: ', $view_data['view']->value, '<br>';
-// echo 'id: ', $view_data['id'] ??= 'nulo', '<br>';
-// echo 'act: ', var_dump($view_data['act']), '<br>';
+use Back\Cross\Router;
+use Back\Cross\Security;
+
+require __DIR__ . '/../../subdmns/presto/cross/router.php';
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+    <input type="text" id='input'>
+    <br>
+    <button id='btn'>Click aquí</button>
+</body>
+<script>
+    const x = document.getElementById('input');
+    console.log(x);
+    document.getElementById('btn').addEventListener('click', () => console.log(x.value));
+</script>
+</html>
+

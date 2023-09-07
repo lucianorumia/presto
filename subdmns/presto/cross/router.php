@@ -3,6 +3,7 @@ namespace Back\Cross;
 
 use \Throwable;
 use Back\Cross\CstmException;
+use Back\Cross\Views;
 
 require_once __DIR__ . '/config.php';
 
@@ -60,5 +61,14 @@ class Router {
 
     public static function getFilePath($ns_filepath) {
         return self::nsToRealPath($ns_filepath);
+    }
+
+    public static function realToNsFilename($real_filename) {
+        $sections = explode('-', $real_filename);
+        $view_section = ucfirst($sections[0]);
+        if (count($sections)>1)
+            $act_section = ucfirst($sections[1]);
+        
+        return $view_section . ($act_section ?? '');
     }
 }

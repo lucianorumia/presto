@@ -39,7 +39,14 @@ function msToDecHs(ms, decDig) {
     return strHs;
 }
 
-function hsMinElapsed(date1, date2) {
+function elapsedDays(date1, date2) {
+    const time = date2.getTime() - date1.getTime();
+    const days =  Math.floor(time / MILISECONDS.DAY);
+
+    return days;
+}
+
+function elapsedHsMin(date1, date2) {
     const time = date2.getTime() - date1.getTime();
     const hs =  Math.floor(time / MILISECONDS.HOUR);
     const min = Math.floor((time - hs * MILISECONDS.HOUR) / MILISECONDS.MIN);
@@ -187,7 +194,8 @@ export {
     utcToLocalDate,
     msToHis,
     msToDecHs,
-    hsMinElapsed,
+    elapsedDays,
+    elapsedHsMin,
     sameDay,
     sameDays,
     absDay,
