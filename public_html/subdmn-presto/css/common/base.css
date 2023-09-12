@@ -240,6 +240,31 @@ body {
     overflow: hidden;
 }
 
+.frame {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.frame__top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 1rem;
+    background: linear-gradient(to bottom, var(--def-back-gray), transparent);
+}
+
+.frame__bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1rem;
+    background: linear-gradient(to top, var(--def-back-gray), transparent);
+}
+
 /* footer */
 footer {
     /* position: relative; */

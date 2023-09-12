@@ -221,6 +221,41 @@ CREATE TABLE cuotas (
         REFERENCES prestamos(id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE cuota_actions (
+    id tinyint(1) UNSIGNED NOT NULL,
+    action varchar(14) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE cuotas_actions (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    cuota_id int UNSIGNED NOT NULL,
+    action_id tinyint(1) UNSIGNED NOT NULL,
+    asiento_id int UNSIGNED NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_cuotas_actions_cuota
+        FOREIGN KEY (cuota_id)
+        REFERENCES cuotas (id),
+    CONSTRAINT fk_cuotas_actions_action
+        FOREIGN KEY (action_id)
+        REFERENCES cuota_actions (id),
+    CONSTRAINT fk_cuotas_actions_asiento
+        FOREIGN KEY (asiento_id)
+        REFERENCES asientos (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE cuota_states (
+    id tinyint(1) UNSIGNED NOT NULL,
+    state varchar(10) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE prestamo_states (
+    id tinyint(1) UNSIGNED NOT NULL,
+    state varchar(13) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
 
 -- Views
 
@@ -235,6 +270,80 @@ CREATE VIEW clientes_list AS (
     ) AS t ON p.id = t.persona_id
     ORDER BY denominacion
 );
+
+CREATE VIEW cuotas_state AS (
+    SELECT id AS cuota_id,
+        CASE
+            WHEN precedent_action IN (2, 3, 4, 5) THEN precedent_action
+            WHEN fecha_vto < CURRENT_DATE() THEN 1
+            ELSE 0
+        END AS state_id
+    FROM (
+        SELECT
+            c.id,
+            c.fecha_vto,
+            MAX(ca.action_id) AS precedent_action
+        FROM cuotas AS c
+        LEFT JOIN cuotas_actions AS ca ON c.id = ca.cuota_id
+        GROUP BY c.id
+    ) as sq
+)
+
+CREATE VIEW prestamos_state AS (
+    SELECT prestamo_id,
+        MAX(state_id) AS state_id
+    FROM (
+        SELECT prestamo_id,
+            CASE
+                WHEN precedent_action = 2 THEN 5
+                WHEN precedent_action = 3 THEN 1
+                WHEN precedent_action = 4 THEN 0
+                WHEN precedent_action = 5 THEN 2
+                WHEN fecha_vto < CURRENT_DATE() THEN 4
+                ELSE 3
+            END AS state_id
+        FROM (
+            SELECT c.prestamo_id,
+                c.fecha_vto,
+                MAX(ca.action_id) AS precedent_action
+            FROM cuotas AS c
+            LEFT JOIN cuotas_actions AS ca ON c.id = ca.cuota_id
+            GROUP BY c.id
+        ) AS sq_1
+    ) AS sq_2
+    GROUP BY prestamo_id
+)
+
+CREATE VIEW prestamos_list AS (
+    SELECT p.id,
+        p.cod,
+        cl.id AS cliente_id,
+        cl.denominacion AS cliente_denominacion,
+        st.state_id,
+        st.state,
+        mt.monto,
+        st.cuotas,
+        pd.periodicidad,
+        p.tasa
+    FROM prestamos AS p    
+    JOIN clientes_list AS cl ON p.cliente_id = cl.id
+    JOIN periodicidades AS pd ON p.periodicidad_id = pd.id
+    JOIN (
+        SELECT a.id, 
+    	    SUM(m.debe) AS monto
+        FROM asientos AS a
+        JOIN minutas AS m ON a.id = m.asiento_id
+        GROUP BY a.id
+    ) AS mt ON p.asiento_id = mt.id
+    JOIN (
+        SELECT prestamo_id,
+	    state_id,
+            state,
+            cuotas_cant AS cuotas
+        FROM prestamos_state AS pps
+        JOIN prestamo_states AS pss ON pps.state_id = pss.id
+    ) AS st ON p.id = st.prestamo_id
+)
 
 
 -- Dumping data
@@ -270,6 +379,28 @@ INSERT INTO domicilio_types (id, type) VALUES
 (3, 'Laboral'),
 (4, 'Postal'),
 (5, 'Otro');
+
+INSERT INTO cuota_actions (id, action) VALUES
+(1, 'Pago parcial'),
+(2, 'Cancelación'),
+(3, 'Refinanciación'),
+(4, 'Judicial'),
+(5, 'Incobrable');
+
+INSERT INTO cuota_states (id, state) VALUES
+(0, 'No vencida'),
+(1, 'En mora'),
+(2, 'Judicial'),
+(3, 'Cancelada'),
+(4, 'Refinanciada'),
+(5, 'Incobrable');
+
+INSERT INTO prestamo_states (id, state) VALUES
+(1, 'Cancelado'),
+(2, 'Incobrable'),
+(3, 'No vencida'),
+(4, 'En mora'),
+(5, 'Judicial');
 
 INSERT INTO modalidades (id, modalidad) VALUES
 (1, 'Tasa s/monto'),

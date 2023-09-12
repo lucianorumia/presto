@@ -19,13 +19,17 @@ base
 |
 |__ public_html(front)
     |
-    |__ back-interface
-    |
     |__ css
     |
     |__ js
+    |
+    |__ res
     * indexfile
+    * back-interface
     * .htaccess
+
+
+Most updated fetch: prestamos;
 
 Views\ClientesNew
     Adresses display-none (div + span): pending functionality

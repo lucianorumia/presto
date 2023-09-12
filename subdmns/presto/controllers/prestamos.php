@@ -87,6 +87,13 @@ class Prestamos {
         }
     }
 
+    public function getPrestamos(?int $cliente_id = null, ?int $state_id = null) {
+        $dbh = new DbConnection;
+        $prestamo = new Prestamo($dbh);
+        
+        return $prestamo->selectPrestamosList($cliente_id, $state_id);
+    }
+
     public function getModalidades(): array {
         $dbh = new DbConnection;
         $prestamo = new Prestamo($dbh);

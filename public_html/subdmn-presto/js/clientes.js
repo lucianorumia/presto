@@ -8,7 +8,7 @@ const modal = document.querySelector('.modal');
 
 getClientes();
 
-applyFtr.addEventListener('click', getClientes)
+applyFtr.addEventListener('click', getClientes);
 
 resetFtr.addEventListener('click', () => {
     filterForm.reset();
@@ -23,8 +23,6 @@ function getClientes() {
         token: token,
         name: name,
     };
-
-    console.log(dataToSend);
 
     fetch(url, {
         method: 'POST',

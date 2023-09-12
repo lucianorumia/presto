@@ -1,5 +1,6 @@
 import { MULTI_X, focusXSlide} from "/js/modules/multi-x.js";
 import { MILISECONDS, Ymd, elapsedDays } from "/js/modules/dates.js";
+import { MODAL_MODE, MODAL_BUTTON, setModal, resetModal } from "/js/modules/modal.js";
 
 const newPestamoForm = document.getElementById('new-prestamo-form');
 const clienteInp = document.getElementById('cliente-inp');
@@ -15,6 +16,8 @@ const resetBtn = document.getElementById('reset-btn');
 const simulateBtn = document.getElementById('simulate-btn');
 const editBtn = document.getElementById('edit-btn');
 const confirmBtn = document.getElementById('confirm-btn');
+
+const modal = document.querySelector('.modal');
 
 let fecEntrega;
 let cuotas;
@@ -133,6 +136,7 @@ function setSimTable() {
 }
 
 function savePrestamo() {
+    let modalMode, modalBtns, modalTitle, modalText;
     const url = '/back-interface.php';
     const token = document.getElementById('token').value;
     const cliente = document.querySelector(`#clientes-lst option[value="${clienteInp.value}"]`).dataset.key;
@@ -164,10 +168,39 @@ function savePrestamo() {
         },
         body: JSON.stringify(dataToSend),
     })
-    // .then(response => response.json())
-    .then(response => response.text())
+    .then(response => response.json())
+    // .then(response => response.text())
     .then(respData => {
-        console.log(respData);
+        if (respData.success) {
+            modalMode = MODAL_MODE.INFO;
+            modalBtns = [MODAL_BUTTON.OK];
+            modalTitle = 'Listo!';
+            modalText = 'El préstamo se registró con éxito';
+
+            setModal(modal, modalMode, modalTitle, modalText, modalBtns);
+        
+            modal.addEventListener('close', () => {
+                window.location.href = '/prestamos';
+            });
+
+            modal.showModal();
+            
+        } else {
+            modalMode = MODAL_MODE.ERROR;
+            modalBtns = [MODAL_BUTTON.OK];
+            modalTitle = CST_ERROR.CST099.modal.title;
+            modalText = CST_ERROR.CST099.modal.text;
+
+            console.error(respData.error);
+
+            setModal(modal, modalMode, modalTitle, modalText, modalBtns);
+        
+            modal.addEventListener('close', () => {
+                resetModal(modal);
+            }, {once: true});
+
+            modal.showModal();
+        }
     })
     .catch(err => {
         console.error(err);

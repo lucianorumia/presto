@@ -19,6 +19,52 @@ class Prestamo {
      * PRESTAMOS 
      */
 
+    public function selectPrestamosList(?int $cliente_id, ?int $state_id): array {
+        $sql = "SELECT * "
+            . "FROM prestamos_list";
+        
+        $where_arr = [];
+
+        if (!is_null($cliente_id))
+            $where_arr[] = ' cliente_id = :cliente_id';
+
+        if (!is_null($state_id)) {
+            if ($state_id === -1) {
+                $where_arr[] = ' state_id > 2';
+            } else {
+                $where_arr[] = ' state_id = :state_id';
+            }
+        }
+        
+        $where_arr_length = count($where_arr);
+
+        if ($where_arr_length > 0) {
+            $where_str = " WHERE";
+            
+            for ($i = 0; $i < $where_arr_length; $i++) {
+                $where_str .= $where_arr[$i];
+            
+                if ($i != $where_arr_length - 1) {
+                    $where_str .= " AND";
+                }
+            }
+            
+            $sql .= $where_str;
+        }        
+
+        $stmt = $this->dbh->prepare($sql);
+
+        if (!is_null($cliente_id))
+            $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
+
+        if (!is_null($state_id) && $state_id != -1)
+            $stmt->bindParam(':state_id', $state_id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getAiPrestamos(): int {
         $sql = "SELECT AUTO_INCREMENT "
             . "FROM INFORMATION_SCHEMA.TABLES "

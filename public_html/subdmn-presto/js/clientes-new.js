@@ -488,7 +488,6 @@ function sendClienteData() {
     .then(response => response.json())
     // .then(response => response.text())
     .then(respData => {
-        // console.log(respData);
         if (respData.success) {
             modalMode = MODAL_MODE.INFO;
             modalBtns = [MODAL_BUTTON.OK];

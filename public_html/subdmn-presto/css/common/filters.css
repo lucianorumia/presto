@@ -1,3 +1,75 @@
+.filters {
+    color: var(--def-back-gray);
+    background-color: var(--def-light-gray);
+    padding: 1rem 1rem .5rem;
+    display: grid;
+}
+
+.filters__def {
+    grid-area: def;
+}
+
+.filters__more {
+    grid-area: more;
+}
+
+.filters__field {
+
+}
+
+.filters__label {
+
+}
+
+.filters__control {
+
+}
+
+.filters__action-buttons {
+    grid-area: action-buttons;
+}
+
+.filters__state {
+    grid-area: state;
+}
+
+
+/**
+ * SM
+ */
+
+.filters {
+    grid-template-areas:
+        'def'
+        'more'
+        'action-buttons';
+}
+
+/**
+ * MD
+ */
+
+@media only screen and (min-width: 576px) {
+
+    .filters {
+        grid-template-areas:
+            'def action-buttons'
+            'more action-buttons'
+            'state state';
+    }
+}
+
+/**
+ * LG
+ */
+
+@media only screen and (min-width:768px) {
+
+}
+
+
+/* deprecated */
+
 .filter-strip {
     background-color: var(--def-light-gray);
     display: flex;
