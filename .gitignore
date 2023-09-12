@@ -1,4 +1,5 @@
-/subdmns/presto/cross/config.php
-/subdmns/presto/cross/security.php
-notes
-common-blocks
+/app/cross/config.php
+/app/cross/security.php
+/public_html/back-interface
+/public_html/test.php
+/private

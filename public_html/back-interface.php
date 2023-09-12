@@ -6,7 +6,7 @@ use Back\Cross\CstmExceptions;
 use Back\Cross\Security;
 
 session_start();
-require __DIR__ . '/../../subdmns/presto/cross/router.php';
+require __DIR__ . '/../app/cross/router.php'; // Hardcode ref!
 
 try {
     $json_rqst = file_get_contents('php://input');

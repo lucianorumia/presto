@@ -5,8 +5,8 @@ use Back\Cross\UserRoles;
 use Back\Cross\ViewHandler;
 use Back\Cross\Security;
 
-require __DIR__ . '/../../subdmns/presto/cross/router.php';
 session_start();
+require __DIR__ . '/../app/cross/router.php'; // Hardcode ref!
 
 $logged_in = isset($_SESSION['user_id']);
 $user_role = $logged_in ? UserRoles::tryFrom($_SESSION['user_role_id']) : null;
