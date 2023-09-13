@@ -345,6 +345,28 @@ CREATE VIEW prestamos_list AS (
     ) AS st ON p.id = st.prestamo_id
 )
 
+CREATE VIEW prestamo_detail AS (
+    SELECT p.id,
+        p.cod,
+        cl.denominacion AS cliente,
+        sq.monto,
+        sq.fecha_entrega,
+        md.modalidad,
+        pd.periodicidad,
+        p.tasa
+    FROM prestamos AS p    
+    JOIN clientes_list AS cl ON p.cliente_id = cl.id
+    JOIN (
+        SELECT a.id,
+            a.fecha AS fecha_entrega,
+    	    SUM(m.debe) AS monto
+        FROM asientos AS a
+        JOIN minutas AS m ON a.id = m.asiento_id
+        GROUP BY a.id
+    ) AS sq ON p.asiento_id = sq.id
+    JOIN periodicidades AS pd ON p.periodicidad_id = pd.id
+    JOIN modalidades AS md ON p.modalidad_id = md.id
+)
 
 -- Dumping data
 

@@ -1,0 +1,48 @@
+@import "/css/common/base.css";
+@import "/css/common/def-table.css";
+@import "/css/common/action-bar.css";
+@import "/css/common/modal.css";
+
+.details-band {
+    color: var(--def-back-gray);
+    background-color: var(--def-light-gray);
+    padding: 1rem;
+    display: flex;
+}
+
+.details-band__element {
+    display: flex;
+    flex-direction: column;
+    row-gap: .2em;
+}
+
+.details-band__label {
+    padding: 0 .5em;
+}
+
+.details-band__info {
+    padding: .2em .5em;
+    background-color: white;
+    border-radius: 4px;
+}
+
+/**
+ * SM
+ */
+
+.details-band {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/**
+ * MD
+ */
+
+@media only screen and (min-width: 576px) {
+    .details-band {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 1rem;
+    }
+}

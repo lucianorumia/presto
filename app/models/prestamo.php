@@ -65,6 +65,17 @@ class Prestamo {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function selectPrestamoDetail(int $id): array|false {
+        $sql = "SELECT * "
+            . "FROM prestamo_detail "
+            . "WHERE id = :id";
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function getAiPrestamos(): int {
         $sql = "SELECT AUTO_INCREMENT "
             . "FROM INFORMATION_SCHEMA.TABLES "

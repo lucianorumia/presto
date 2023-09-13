@@ -6,7 +6,7 @@ use Back\Cross\ViewHandler;
 use Back\Cross\Security;
 
 session_start();
-require __DIR__ . '/../app/cross/router.php'; // Hardcode ref!
+require __DIR__ . '/../app/cross/router.php'; // Set ref!
 
 $logged_in = isset($_SESSION['user_id']);
 $user_role = $logged_in ? UserRoles::tryFrom($_SESSION['user_role_id']) : null;
