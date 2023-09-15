@@ -22,7 +22,7 @@ foreach ($clientes_list as $cliente) {
     echo <<<HTML
                         <option value="{$cliente['denominacion']}" data-key="{$key}"></option>
 HTML . PHP_EOL;
-    }
+}
 ?>
                     </datalist>
                 </div>
@@ -47,7 +47,6 @@ HTML . PHP_EOL;
             <section class="filters__state">filters_state</section>
         </form>
         <div class="frame">
-            <div class="frame__top"></div>
             <!-- def-table -->
             <div class="def-table__container">
                 <table class="def-table" id="prestamos-table">
@@ -68,10 +67,10 @@ HTML . PHP_EOL;
                     <tbody></tbody>
                 </table>
             </div>
-            <!-- action-bar -->
-            <div class="action-bar">
-                <a class="action-bar__button spclss--no-effects-font" href="/prestamos/alta">Nuevo pr&eacute;stamo</a>
-                <div class="action-bar__circle"></div>
-            </div>
             <div class="frame__bottom"></div>
+        </div>
+        <!-- action-bar -->
+        <div class="action-bar">
+            <a class="action-bar__button spclss--no-effects-font" href="/prestamos/alta">Nuevo pr&eacute;stamo</a>
+            <div class="action-bar__circle"></div>
         </div>

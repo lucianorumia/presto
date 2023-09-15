@@ -99,7 +99,9 @@ class Prestamos {
         $prestamo = new Prestamo($dbh);
 
         $prestamo_details = $prestamo->selectPrestamoDetail($id);
-        
+        $prestamo_cuotas = $prestamo->selectCuotasList($id);
+        $prestamo_details['cuotas'] = $prestamo_cuotas;
+
         return $prestamo_details;
     }
 

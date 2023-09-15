@@ -14,6 +14,7 @@ $prestamos_data = [];
             'key' => $security->aideEncrypt($prestamo['id']),
             'cod' => $prestamo['cod'],
             'cliente' => $prestamo['cliente_denominacion'],
+            'estadoId' => $prestamo['state_id'],
             'estado' => $prestamo['state'],
             'monto' => $prestamo['monto'],
             'cuotas' => $prestamo['cuotas'],

@@ -119,7 +119,18 @@ class Prestamo {
      * CUOTAS 
      */
 
-     public function getAiCuotas(): int {
+    public function selectCuotasList(int $prestamo_id): array|false {
+        $sql = "SELECT * "
+            . "FROM cuotas_list "
+            . "WHERE prestamo_id = :prestamo_id";
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindParam(':prestamo_id', $prestamo_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAiCuotas(): int {
         $sql = "SELECT AUTO_INCREMENT "
             . "FROM INFORMATION_SCHEMA.TABLES "
             . "WHERE TABLE_SCHEMA = '" . DB_NAME . "' "

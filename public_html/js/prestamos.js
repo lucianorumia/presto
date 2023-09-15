@@ -48,19 +48,36 @@ function getPrestamos() {
         if (respData.success) {
             const prestamosTable = document.getElementById('prestamos-table');
             if (respData.prestamos.length > 0) {
+                const prestamoStatesColors = {
+                    '1': 'green',
+                    '2': 'purple',
+                    '3': 'yellow',
+                    '4': 'red',
+                    '5': 'orange'
+                }
                 const prestamosTblBody = prestamosTable.querySelector('tbody');
                 prestamosTblBody.innerHTML = '';
 
                 respData.prestamos.forEach(prestamo => {
                     const newElement = document.createElement('tr');
-                    const innerHtmlStr = `<td><div class="def-table__row-mark def-table__row-mark--def"></div></td>
+                    const rowMarkColor = prestamoStatesColors[prestamo.estadoId];
+                    const monto = Intl.NumberFormat("es-AR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }).format(prestamo.monto);
+                    const tasa = Intl.NumberFormat("es-AR", {
+                        style: 'percent',
+                        maximumFractionDigits: 2
+                    }).format(prestamo.tasa);
+
+                    const innerHtmlStr = `<td><div class="def-table__row-mark def-table__row-mark--${rowMarkColor}"></div></td>
                         <td>${prestamo.cod}</td>
                         <td>${prestamo.cliente}</td>
                         <td>${prestamo.estado}</td>
-                        <td>${prestamo.monto}</td>
+                        <td>${monto}</td>
                         <td>${prestamo.cuotas}</td>
                         <td>${prestamo.periodicidad}</td>
-                        <td>${prestamo.tasa}</td>
+                        <td>${tasa}</td>
                         <td></td>
                         <td>
                             <a class="def-table__plus-btn" href="/prestamos/${prestamo.key}">+</a>

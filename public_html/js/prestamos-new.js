@@ -63,7 +63,8 @@ function getCuotas() {
                 vto = new Date(fecEntrega.getTime() + ord * MILISECONDS.DAY * 14);
                 break;
             case 4:
-                vto = new Date(fecEntrega.setMonth(fecEntrega.getMonth() + ord));
+                vto = new Date(fecEntrega);
+                vto.setMonth(fecEntrega.getMonth() + ord);
                 break;
         }
 

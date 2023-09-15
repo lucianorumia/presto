@@ -246,7 +246,7 @@ CREATE TABLE cuotas_actions (
 
 CREATE TABLE cuota_states (
     id tinyint(1) UNSIGNED NOT NULL,
-    state varchar(10) NOT NULL UNIQUE,
+    state varchar(13) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -287,6 +287,26 @@ CREATE VIEW cuotas_state AS (
         LEFT JOIN cuotas_actions AS ca ON c.id = ca.cuota_id
         GROUP BY c.id
     ) as sq
+)
+
+CREATE VIEW cuotas_list AS (
+    SELECT c.id,
+        c.prestamo_id,
+        c.cod,
+        c.fecha_vto,
+        c.capital,
+        c.interes,
+        c.capital + c.interes AS total,
+        st.state_id,
+        st.state
+    FROM cuotas AS c
+    JOIN (
+        SELECT ccs.cuota_id,
+            ccs.state_id,
+            css.state
+        FROM cuotas_state AS ccs
+        JOIN cuota_states AS css ON ccs.state_id = css.id
+    ) AS st ON c.id = st.cuota_id
 )
 
 CREATE VIEW prestamos_state AS (
@@ -404,15 +424,15 @@ INSERT INTO domicilio_types (id, type) VALUES
 
 INSERT INTO cuota_actions (id, action) VALUES
 (1, 'Pago parcial'),
-(2, 'Cancelación'),
-(3, 'Refinanciación'),
-(4, 'Judicial'),
+(2, 'Judicial'),
+(3, 'Cancelación'),
+(4, 'Refinanciación'),
 (5, 'Incobrable');
 
 INSERT INTO cuota_states (id, state) VALUES
 (0, 'No vencida'),
 (1, 'En mora'),
-(2, 'Judicial'),
+(2, 'Mora judicial'),
 (3, 'Cancelada'),
 (4, 'Refinanciada'),
 (5, 'Incobrable');
@@ -420,9 +440,9 @@ INSERT INTO cuota_states (id, state) VALUES
 INSERT INTO prestamo_states (id, state) VALUES
 (1, 'Cancelado'),
 (2, 'Incobrable'),
-(3, 'No vencida'),
-(4, 'En mora'),
-(5, 'Judicial');
+(3, 'Al día'),
+(4, 'Con mora'),
+(5, 'Mora judicial');
 
 INSERT INTO modalidades (id, modalidad) VALUES
 (1, 'Tasa s/monto'),
