@@ -16,4 +16,4 @@ Está construida desde cero y escrita íntegramente con lenguajes *Vanilla* (sin
 - Diseño responsivo (en construcción)
 
 
-Contacto: luciano@rumia.uno
+Contacto: lucianoruffener@gmail.com
